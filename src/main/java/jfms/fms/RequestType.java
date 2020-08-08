@@ -1,0 +1,10 @@
+package jfms.fms;
+
+public enum RequestType {
+	IDENTITY,
+	MESSAGE,
+	MESSAGE_LIST,
+	TRUST_LIST,
+	INTRODUCTION_PUZZLE,
+	IDENTITY_INTRODUCTION
+}
