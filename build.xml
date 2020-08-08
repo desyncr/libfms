@@ -6,9 +6,6 @@
 	<property name="classes.dir" value="${build.dir}/classes"/>
 	<property name="testclasses.dir" value="${build.dir}/test"/>
 	<property name="dist.dir" value="${build.dir}/dist"/>
-	<path id="classpath">
-		<fileset dir="${lib.dir}" includes="**/*.jar"/>
-	</path>
 	<target name="clean">
 		<delete dir="${build.dir}"/>
 	</target>
@@ -22,7 +19,6 @@
 		<mkdir dir="${dist.dir}"/>
 		<jar destfile="${dist.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
 			<manifest>
-				<attribute name="Main-Class" value="${main-class}"/>
 				<attribute name="Class-Path" value="."/>
 			</manifest>
 		</jar>
@@ -37,24 +33,14 @@
 				</zips>
 			</archives>
 			<manifest>
-				<attribute name="Main-Class" value="${main-class}"/>
 				<attribute name="Class-Path" value="."/>
 			</manifest>
 		</jar>
-	</target>
-	<target name="run" depends="dist">
-		<java fork="true" classname="${main-class}">
-			<classpath>
-				<path refid="classpath"/>
-				<path location="${dist.dir}/${ant.project.name}.jar"/>
-			</classpath>
-		</java>
 	</target>
 	<target name="compile-tests" depends="compile">
 		<mkdir dir="${testclasses.dir}"/>
 		<javac srcdir="${testsrc.dir}" destdir="${testclasses.dir}" includeantruntime="false" debug="on">
 			<classpath>
-				<path refid="classpath"/>
 				<path location="${classes.dir}"/>
 			</classpath>
 			<compilerarg value="-Xlint"/>
@@ -63,7 +49,6 @@
 	<target name="unit" description="Runs the unit tests" depends="compile-tests">
 		<junit printsummary="yes" haltonfailure="no">
 			<classpath>
-				<path refid="classpath"/>
 				<path location="${classes.dir}"/>
 				<pathelement location="${testclasses.dir}"/>
 			</classpath>
